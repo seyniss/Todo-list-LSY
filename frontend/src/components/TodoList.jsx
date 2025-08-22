@@ -1,40 +1,29 @@
-import React, { useState, useMemo } from 'react'
-import './TodoList.css'
-import TodoItem from './TodoItem'
-const TodoList = ({todos,onDelete,onUpdateChecked,onUpdateTodo}) => {
+import "./TodoList.css";
+import TodoItem from "./TodoItem";
+import React, { useMemo, useState } from "react";
+const TodoList = ({todos,updatedChecked, onUpdateTodo,onDelete}) => {
 
-  const [q, setQ] = useState('')
+  const [q, setQ] = useState("");
 
   const filtered = useMemo(() => {
-
-    const kw = q.trim().toLowerCase()
-
+    const kw = q.trim().toLowerCase();
     if (!kw) return todos;
-    return todos.filter((t) => (t.text ?? "").toLowerCase().includes(kw))
+    return todos.filter((t) => (t.text ?? "").toLowerCase().includes(kw));
+  }, [todos, q]);
 
-  }, [todos, q])
 
   return (
-    <div className='TodoList'>
+    <div className="TodoList">
       <h4>Todo List 🌱</h4>
-      <input type="text"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        placeholder='검색어를 입력하세요' />
-      <div className="todos-wrapper">
+      <input placeholder="검색어를 입력하세요"    value={q}
+        onChange={(e) => setQ(e.target.value)}/>
+      <div className="todos_wrapper">
         {filtered.map((todo, i) => (
-
-          <TodoItem
-            key={i}
-            todo={todo}
-            onUpdateChecked={onUpdateChecked} 
-            onUpdateTodo={onUpdateTodo}
-            onDelete={onDelete}/>
-          ))}
-        
-        </div>
+          <TodoItem key={i} todo={todo} onDelete={onDelete}  updatedChecked={updatedChecked} onUpdateTodo={onUpdateTodo}/>
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default TodoList
+export default TodoList;

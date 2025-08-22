@@ -1,18 +1,20 @@
-.TodoEditor{
-    display: flex;
-    gap: 10px;
+.Editor {
+  display: flex;
+  gap: 10px;
 }
-.TodoEditor input{
-    flex: 1;
-    padding: 15px;
-    border:1px solid #eee;
-    border-radius: 5px;
+
+.Editor input {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid rgb(220, 220, 220);
+  border-radius: 5px;
 }
-.TodoEditor button{
-    border:1px solid #eee;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #fff;
-    width: 80px;
-    background-color: rgb(37, 147, 255);
+
+.Editor button {
+  cursor: pointer;
+  width: 80px;
+  border: none;
+  background-color: rgb(37, 147, 255);
+  color: white;
+  border-radius: 5px;
 }
