@@ -1,41 +1,42 @@
-const express = require("express")
-const mongoose=require("mongoose")
-const dotenv =require("dotenv")
-const cors=require("cors")
-const cookieParser = require("cookie-parser")
+const express = require('express')
+const mongoose = require("mongoose")
+const dotenv = require("dotenv")
+const cors = require("cors")
+const cookieParser = require('cookie-parser');
 
-dotenv.config()
+dotenv.config(); // .env의 MONGO_URI, PORT 등 로드
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-const app = express()
-const PORT = process.env.PORT || 3000
-
-app.use(cookieParser()); // ★ 쿠키 파싱
-app.use(express.json())
 app.use(cors({
     origin:process.env.FRONT_ORIGIN,
     credentials:true
 }))
-app.use(cookieParser())
+
+app.use(express.json())
 
 mongoose
-    .connect(process.env.MONGO_URI)
-    .then(()=>console.log("MongoDB 연결 성공"))
-    .catch((err)=>console.log("연결 실패",err))
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("Mongodb연결 성공"))
+  .catch((err) => console.log("연결 실패", err));
+
+
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
+const todoRoutes = require("./routes/todoRoutes")
+app.use("/api/todos",todoRoutes)
 
 
 
 
+// 기본 라우트
+app.get("/", (req, res) => {
+  res.send("Hello Express!");
+});
 
-const todoRoutes = require('./routes/todoRoutes')
-app.use('/api/todos',todoRoutes)
-
-const authRoutes = require('./routes/authRoutes')
-app.use('/api/auth',authRoutes)
-
-app.get('/',(req, res)=>{
-    res.send("Hello Express")
-})
-
-app.listen(PORT,()=>{
-    console.log("Server is Running!")
-})
+// 서버 시작
+app.listen(PORT, () => {
+  console.log("Server is Running!~");
+});
+  
